@@ -1,5 +1,6 @@
 // app/auth/pages/signin/page.tsx
 "use client";
+import axios from "axios";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -14,15 +15,21 @@ export default function SignIn() {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const payload = { email, password };
+    try {
+      const response = await axios.post(
+        `http://localhost:3001/auth/signin/${
+          userType === "faculty" ? "faculty" : "student"
+        }`,
+        payload
+      );
 
-    // Here you would typically authenticate with your backend
-    console.log("Signing in with:", { email, password, rememberMe });
-
-    setIsLoading(false);
-    // Redirect to dashboard on success
-    // window.location.href = "/dashboard";
+      localStorage.setItem("access_token", response.data.access_token);
+      setIsLoading(false);
+      window.location.href = "/";
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

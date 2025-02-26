@@ -1,4 +1,5 @@
 "use client";
+import axios from "axios";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -18,46 +19,60 @@ export default function SignUp() {
   const [sap, setSap] = useState("");
   const [roll, setRoll] = useState("");
   const [batch, setBatch] = useState("");
-  const [semester, setSemester] = useState("1");
+  const [semester, setSemester] = useState("ONE");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    // Here you would typically register with your backend
-    const userData =
+    const payload =
       userType === "faculty"
         ? {
-            firstName,
-            lastName,
             email,
             password,
-            employeeId,
-            userType,
+            employeeID: parseInt(employeeId),
+            firstName,
+            lastName,
           }
         : {
-            firstName,
-            lastName,
             email,
             password,
-            sap,
+            sap: parseInt(sap),
             roll,
-            batch,
+            firstName,
+            lastName,
+            batchId: parseInt(batch),
             semester,
-            userType,
           };
 
-    console.log("Signing up with:", userData);
+    try {
+      const response = await axios.post(
+        `http://localhost:3001/auth/signup/${
+          userType === "faculty" ? "faculty" : "student"
+        }`,
+        payload
+      );
 
-    setIsLoading(false);
+      localStorage.setItem("access_token", response.data.access_token);
+      setIsLoading(false);
+      window.location.href = "/";
+    } catch (error) {
+      console.log(error);
+    }
+
     // Redirect to dashboard on success
-    // window.location.href = "/dashboard";
   };
 
-  const semesters = ["1", "2", "3", "4", "5", "6", "7", "8"];
+  const semesters = [
+    "ONE",
+    "TWO",
+    "THREE",
+    "FOUR",
+    "FIVE",
+    "SIX",
+    "SEVEN",
+    "EIGHT",
+  ];
 
   return (
     <div className="w-full max-w-md">
@@ -269,7 +284,7 @@ export default function SignUp() {
                 <input
                   id="batch"
                   name="batch"
-                  type="number"
+                  type="text"
                   required
                   value={batch}
                   onChange={(e) => setBatch(e.target.value)}
