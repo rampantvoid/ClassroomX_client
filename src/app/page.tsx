@@ -1,47 +1,11 @@
+import Navbar from "@/components/Navbar";
 import Image from "next/image";
 
 export default function Home() {
   return (
     <div className="grid grid-rows-[auto_1fr_auto] min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 font-[family-name:var(--font-geist-sans)]">
       {/* Header */}
-      <header className="py-6 px-8 sm:px-16 flex justify-between items-center border-b border-gray-200 dark:border-gray-700">
-        <div className="flex items-center gap-2">
-          <div className="bg-blue-600 text-white px-4 py-2 rounded-lg text-xl font-bold">
-            X
-          </div>
-          <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
-            ClassroomX
-          </h1>
-        </div>
-        <nav>
-          <ul className="flex gap-6">
-            <li>
-              <a
-                href="#features"
-                className="hover:text-blue-600 transition-colors"
-              >
-                Features
-              </a>
-            </li>
-            <li>
-              <a
-                href="#pricing"
-                className="hover:text-blue-600 transition-colors"
-              >
-                Pricing
-              </a>
-            </li>
-            <li>
-              <a
-                href="#about"
-                className="hover:text-blue-600 transition-colors"
-              >
-                About
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </header>
+      <Navbar />
 
       {/* Main Content */}
       <main className="flex flex-col items-center justify-center p-8 sm:p-16 text-center">

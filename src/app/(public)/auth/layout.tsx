@@ -1,4 +1,5 @@
 // app/auth/layout.tsx
+import { AuthProvider } from "@/components/auth-provider";
 import { ReactNode } from "react";
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
@@ -93,7 +94,9 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
       </div>
 
       {/* Right side - Auth forms */}
-      <div className="flex justify-center items-center p-6">{children}</div>
+      <AuthProvider>
+        <div className="flex justify-center items-center p-6">{children}</div>
+      </AuthProvider>
     </div>
   );
 }

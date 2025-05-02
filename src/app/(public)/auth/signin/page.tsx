@@ -26,7 +26,8 @@ export default function SignIn() {
 
       localStorage.setItem("access_token", response.data.access_token);
       setIsLoading(false);
-      window.location.href = "/";
+      window.location.href =
+        userType === "faculty" ? "/faculty/dashboard" : "/student/dashboard";
     } catch (error) {
       console.log(error);
     }

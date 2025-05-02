@@ -55,9 +55,11 @@ export default function SignUp() {
 
       localStorage.setItem("access_token", response.data.access_token);
       setIsLoading(false);
-      window.location.href = "/";
+      window.location.href =
+        userType === "faculty" ? "/faculty/dashboard" : "/student/dashboard";
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
     }
 
     // Redirect to dashboard on success
